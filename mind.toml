@@ -3,6 +3,7 @@
 [package]
 name = "lucid"
 version = "0.1.0"
+repository = "https://github.com/dream-mindv2/lucid"
 description = "The Dream language server"
 
 [dependencies]
