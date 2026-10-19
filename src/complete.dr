@@ -353,6 +353,11 @@ let import_items a e = {
                 _ => item n kind_module "" "An import." rank_import,
             }
         }) (map.pairs (scope.aliases e));
+    // What the prelude lent (`scope.is_lent`) is in the same tables and was
+    // brought in by no import anyone wrote, so it is not offered as one --
+    // and whether it is there at all depends on whether `std` can be found,
+    // which made what an import offered depend on `$DREAM_PACKAGES`.
+    //
     // `import a.{x as y}` binds `y` to `a`'s `x`. What is offered is the name
     // it was bound to, described by where it came from, because that is the
     // pair the reader has to keep straight.
@@ -370,8 +375,8 @@ let import_items a e = {
             item bound kind_variable member
                  ("`" + member + "` of `" + from + "`, brought in by an import.")
                  rank_import
-        }) (map.pairs (scope.only e));
-    list.append aliases singles
+        }) (filter (fn kv -> not (scope.is_lent e (list.head kv))) (map.pairs (scope.only e)));
+    list.append (filter (fn i -> not (scope.is_lent e (i.["label" else ""]))) aliases) singles
 };
 
 /// The builtins a program is meant to write: everything but the primitives.
