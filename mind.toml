@@ -2,7 +2,7 @@
 # gives is one `dreams` worked out.
 [package]
 name = "lucid"
-version = "0.1.0"
+version = "0.1.1"
 repository = "https://github.com/dream-mindv2/lucid"
 description = "The Dream language server"
 
