@@ -1,8 +1,9 @@
 # The language server. It is the compiler used as a library: every answer it
 # gives is one `dreams` worked out.
 [package]
+license = "MIT OR Apache-2.0"
 name = "lucid"
-version = "0.1.1"
+version = "0.1.2"
 repository = "https://github.com/dream-mindv2/lucid"
 description = "The Dream language server"
 
