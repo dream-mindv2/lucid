@@ -32,8 +32,8 @@ let main! = {
     let failed = list.filter (fn p -> {
         let text = file.read! p;
         match text {
-            () => true,
-            s => normalized (parser.parse_module s) != normalized (declarations.parse s),
+            Option.none => true,
+            Option.some(s) => normalized (parser.parse_module s) != normalized (declarations.parse s),
         }
     }) paths;
     strict! failed

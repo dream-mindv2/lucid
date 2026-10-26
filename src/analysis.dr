@@ -121,7 +121,7 @@ let texts_current! path roots docs a =
     && package.discover! path roots == modules.packages (source a)
     && list.all (fn f -> {
         let p = diag.source_path f;
-        docs.[p else (file.read! p)] == diag.source_text f
+        docs.[p else (Option.or_unit (file.read! p))] == diag.source_text f
     }) (modules.files (source a));
 
 /// Editor requests need names and declarations, not the compiler's fusion

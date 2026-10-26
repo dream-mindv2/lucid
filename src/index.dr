@@ -40,7 +40,7 @@ let rec dependencies tree = match tree {
 
 let parsed! : :string -> :map -> :map -> [:any];
 let parsed! file docs cache = {
-    let text = docs.[file else (match files.read! file { () => "", s => s })];
+    let text = docs.[file else (match files.read! file { Option.none => "", Option.some(s) => s })];
     let result = match cache.[file else ()] {
         [same, p] if same == text => p,
         _ => parser.parse_module text,
@@ -99,7 +99,7 @@ let rec add_with! l file roots docs wanted full !visiting = {
     if map.has absolute (modules.by_path l) || list.contains absolute visiting { l }
     else {
         let [text, parsed] = if full != () {
-            let text = docs.[file else (match files.read! file { () => "", s => s })];
+            let text = docs.[file else (match files.read! file { Option.none => "", Option.some(s) => s })];
             let parsed = match (modules.parsed l).[file else ()] {
                 [same, p] if same == text => p,
                 _ => declarations.parse text,
@@ -268,7 +268,7 @@ let hint_imports items first last = {
 
 let hints! : :string -> [:string] -> :map -> :map -> :integer -> :integer -> :map;
 let hints! file roots docs parsed first last = {
-    let text = docs.[file else (match files.read! file { () => "", s => s })];
+    let text = docs.[file else (match files.read! file { Option.none => "", Option.some(s) => s })];
     let full_key = file + "#hint-root";
     let full = match parsed.[full_key else ()] {
         [same, p] if same == text => p,

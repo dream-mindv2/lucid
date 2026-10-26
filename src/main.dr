@@ -421,7 +421,7 @@ let usage = cli.usage "lucid" "a language server for Dream"
 let stdlib_roots! () =
     match os.env! "MIND_STDLIB" {
         () => match os.env! "DREAM_PACKAGES" {
-            () => match install.holding! "std" { () => [], d => [d] },
+            () => match install.holding! "std" { Option.none => [], Option.some(d) => [d] },
             p => [path.expand_home! p],
         },
         p => [path.expand_home! p],
