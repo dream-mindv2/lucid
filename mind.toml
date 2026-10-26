@@ -3,7 +3,7 @@
 [package]
 license = "MIT OR Apache-2.0"
 name = "lucid"
-version = "0.1.2"
+version = "0.1.3"
 repository = "https://github.com/dream-mindv2/lucid"
 description = "The Dream language server"
 

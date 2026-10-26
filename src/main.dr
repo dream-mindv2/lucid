@@ -52,7 +52,7 @@ import complete;
 import pos;
 import rpc;
 
-let version = "0.1.2";
+let version = "0.1.3";
 
 // --- what the server is holding ------------------------------------------------
 
