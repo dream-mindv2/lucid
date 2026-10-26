@@ -9,3 +9,7 @@ description = "The Dream language server"
 
 [dependencies]
 dreams = "../dreams"
+
+# `mind release`: `lucid --version` prints the version from the source too.
+[release]
+files = ["src/main.dr"]

@@ -2,4 +2,4 @@
 # `mind update` moves it. Commit it with the manifest.
 
 [program]
-"dreams" = { source = "../dreams", version = "0.1.0" }
+"dreams" = { source = "../dreams", version = "0.2.2" }
