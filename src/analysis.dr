@@ -119,7 +119,7 @@ let texts_current! : :string -> [:string] -> :map -> :any -> :bool;
 let texts_current! path roots docs a =
     module_index (source a) path == module_of a && module_of a != ()
     && package.discover! path roots == modules.packages (source a)
-    && list.all (fn f -> {
+    && list.all (fn! f -> {
         let p = diag.source_path f;
         docs.[p else (Option.or_unit (file.read! p))] == diag.source_text f
     }) (modules.files (source a));
@@ -388,6 +388,8 @@ let rec expr_binders e offset acc =
     else {
         match e {
             [:lambda, ps, body, _] =>
+                expr_binders body offset (list.append acc (param_binders ps)),
+            [:impure_lambda, ps, body, _] =>
                 expr_binders body offset (list.append acc (param_binders ps)),
             [:block, stmts, _] => block_binders stmts offset acc,
 
@@ -1454,6 +1456,7 @@ let binders_in toks items = {
         [:let, n, ps, body, _, span] => walk (params (note acc n span) ps) body,
         [:let_p, pattern, body, _] => walk (patterned acc pattern) body,
         [:lambda, ps, body, _] => walk (params acc ps) body,
+        [:impure_lambda, ps, body, _] => walk (params acc ps) body,
         [:match, subject, arms, _] => list.fold (fn m arm ->
             walk (walk (patterned m (ast.arm_pattern arm)) (ast.arm_guard arm)) (ast.arm_body arm))
             (walk acc subject) arms,

@@ -29,7 +29,7 @@ let sources! dir = list.map (fn p -> dir + "/" + p) (file.walk! dir);
 let main! = {
     let paths = list.filter (fn p -> str.ends_with ".dr" p)
         (sources! "mind/std" + sources! "dreams" + sources! "lucid");
-    let failed = list.filter (fn p -> {
+    let failed = list.filter (fn! p -> {
         let text = file.read! p;
         match text {
             Option.none => true,

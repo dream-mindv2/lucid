@@ -139,7 +139,7 @@ let publish! out groups path = {
         rpc.write_message! out
             (rpc.notification "textDocument/publishDiagnostics"
                  %{ "uri" => analysis.path_to_uri p, "diagnostics" => ds });
-    map (fn g -> send! (list.head g) (list.nth 1 g)) groups |> strict!
+    map (fn! g -> send! (list.head g) (list.nth 1 g)) groups |> strict!
     if list.contains path mentioned { () } else { send! path [] }
 };
 
@@ -150,7 +150,7 @@ let refresh! : :any -> :map -> :string -> :map;
 let refresh! out s path = {
     if path == "" { () }
     else {
-        map (fn p -> send! s.[:worker] [:check, snapshot s p]) (map.keys (docs s)) |> strict!
+        map (fn! p -> send! s.[:worker] [:check, snapshot s p]) (map.keys (docs s)) |> strict!
     }
     s
 };
@@ -366,7 +366,7 @@ let rec events! out !s = match recv! () {
         let why = match outcome { Result.error(e) => error.describe e, other => to_string other };
         rpc.write_message! out (rpc.notification "window/logMessage"
             %{ "type" => 1, "message" => "Lucid background worker stopped: " + why })
-        map (fn id -> rpc.write_message! out
+        map (fn! id -> rpc.write_message! out
             (rpc.error_response id (0 - 32803) why)) (map.keys (s.[:pending else (%{})])) |> strict!
         let owner = self! ();
         strict! owner

@@ -110,7 +110,7 @@ let rec add_with! l file roots docs wanted full !visiting = {
         let locator = modules.loader (package.discover! file roots) (config.defaults! ())
                           (modules.default_search_paths! file roots) [];
         let requested = list.unique (wanted_imports (items parsed) wanted);
-        let before = fold (fn acc dep -> {
+        let before = fold (fn! acc dep -> {
             if modules.is_host acc dep { modules.record_native dep acc }
             else { match import_file! locator dep {
                 () => acc,
@@ -294,7 +294,7 @@ let current! file roots docs wanted a = {
                       (modules.default_search_paths! file roots) [];
     let parsed = (modules.parsed (analysis.source a)).[file else ()];
     let raw = match parsed { [_, p] => items p, _ => [] };
-    list.all (fn dep -> match import_file! locator dep {
+    list.all (fn! dep -> match import_file! locator dep {
         () => true,
         [target, _] => map.has (path.absolute! target) (modules.by_path (analysis.loader a)),
     }) (wanted_imports raw wanted)
